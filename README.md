@@ -67,7 +67,7 @@ Scan the Expo QR code from a physical iOS/Android device. Your phone and API hos
 
 ```bash
 cd backend
-pytest -q
+python -m pytest -q
 ```
 
 ## Security and production migration checklist
