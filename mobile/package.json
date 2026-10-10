@@ -1,1 +1,36 @@
-{"name":"jev-interview-mobile","version":"1.0.0","private":true,"main":"node_modules/expo/AppEntry.js","scripts":{"start":"expo start","android":"expo start --android","ios":"expo start --ios","web":"expo start --web"},"dependencies":{"expo":"~54.0.0","expo-status-bar":"~3.0.9","expo-audio":"~1.0.14","expo-secure-store":"~15.0.7","react":"19.1.0","react-native":"0.81.4","react-native-safe-area-context":"~5.6.0"},"devDependencies":{"@babel/core":"^7.25.0"}}
+{
+  "name": "jev-interview-mobile",
+  "version": "1.0.0",
+  "private": true,
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "check": "expo install --check",
+    "export:mobile": "expo export --platform ios --platform android",
+    "audit": "npm audit"
+  },
+  "dependencies": {
+    "expo": "~57.0.27",
+    "expo-asset": "~57.0.19",
+    "expo-audio": "~57.0.5",
+    "expo-secure-store": "~57.0.4",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-safe-area-context": "~5.7.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.0"
+  },
+  "overrides": {
+    "xcode": {
+      "uuid": "11.1.1"
+    }
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
+}

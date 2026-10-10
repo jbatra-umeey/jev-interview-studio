@@ -54,9 +54,10 @@ DATABASE_PATH=/tmp/jev-interview.db uvicorn app.main:app --reload --host 0.0.0.0
 
 ```bash
 cd mobile
+# Requires Node.js 22.13+ and Expo SDK 57.
 cp .env.example .env
 # Set EXPO_PUBLIC_API_URL=http://YOUR_COMPUTER_LAN_IP:8000
-npm install
+npm ci
 npx expo start
 ```
 
@@ -92,3 +93,9 @@ pytest -q
 ## Single-VM HTTPS deployment reference
 
 Use `compose.production.yml` with a DNS A record and a public host (`APP_DOMAIN=interviews.example.com`). Caddy terminates HTTPS and proxies the application. Before treating it as production, use managed Postgres, authenticated cloud secrets, verified automated backups, rate limiting, dedicated health monitoring, hardened images, and a penetration test. The standard Compose profile remains the local development configuration.
+
+## Mobile dependency security
+
+The mobile app uses Expo SDK 57 with a committed npm lockfile. Run `npm ci`, `npm run check`, and `npm run export:mobile` inside `mobile/` to reproduce dependency validation and the iOS/Android bundle builds. CI uses these same checks.
+
+The October 10, 2026 dependency update reduced npm audit findings from 35 (23 high, 12 moderate) to 14 high findings, all propagated from two upstream advisories without published fixes. This is **not a clean security audit**. See [mobile dependency security notes](mobile/SECURITY.md) for versions, remaining exposure, and recheck commands.

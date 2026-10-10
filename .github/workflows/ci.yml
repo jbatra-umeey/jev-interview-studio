@@ -27,4 +27,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: cd mobile && npm install && npx expo config --json >/dev/null
+      - run: cd mobile && npm ci
+      - run: cd mobile && npm run check
+      - run: cd mobile && npx expo config --json >/dev/null
+      - run: cd mobile && npm run export:mobile
