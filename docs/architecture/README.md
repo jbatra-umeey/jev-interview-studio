@@ -98,7 +98,7 @@ sequenceDiagram
     candidate->>client: Submit answer with request ID
     client->>api: Token, session ID, answer, idempotency key
     api->>api: Validate identity, tenant membership and input
-    api->>db: Verify ownership and entitlement; reserve quota
+    api->>db: Verify ownership and entitlement and reserve quota
     alt Unauthorized or quota exhausted
         db-->>api: Deny
         api-->>client: Access or quota error
@@ -109,11 +109,11 @@ sequenceDiagram
         dispatch->>queue: Publish job ID
         dispatch->>db: Mark outbox record delivered
         queue->>worker: Deliver job, possibly more than once
-        worker->>db: Claim job; load tenant-scoped state and checkpoint
+        worker->>db: Claim job and load tenant-scoped state and checkpoint
         worker->>ai: Evaluate answer and generate follow-up with bounded retries
         ai-->>worker: Structured evaluation
         worker->>worker: Validate output schema and enforce limits
-        worker->>db: Persist result and actual usage; settle reservation
+        worker->>db: Persist result and actual usage and settle reservation
         worker->>queue: Acknowledge completed job
         client->>api: Poll job status or subscribe to authenticated updates
         api->>db: Read result after ownership check
