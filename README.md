@@ -2,6 +2,12 @@
 
 An original interview-practice SaaS prototype, with React web, Expo React Native mobile, FastAPI, SQLite (local development), and optional AI/Stripe/Langfuse integrations.
 
+## SaaS architecture
+
+[View the architecture diagrams](docs/architecture/README.md): current implementation, proposed production deployment, interview orchestration, tenant data model, billing and code isolation, and release/recovery pipeline.
+
+The production diagrams are a **target design**, not a claim that the cloud infrastructure is implemented or deployed.
+
 ## Product screenshots — design previews
 
 These are **illustrative UI renders**, not captures from a deployed product. The dashboard sample metrics and coding-lab output are example content. The actual product currently has an authentication-first landing flow and its screens depend on real API responses.
