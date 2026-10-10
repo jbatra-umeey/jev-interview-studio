@@ -1,0 +1,29 @@
+# Single-VM TLS deployment reference, not a completed managed-cloud deployment.
+# Run: docker compose -f docker-compose.yml -f compose.production.yml up -d --build
+services:
+  web:
+    ports: !reset []
+  api:
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+  gateway:
+    image: caddy:2.9-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:?Set APP_DOMAIN to a domain with DNS pointed to this host}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+volumes:
+  caddy_data:
+  caddy_config:

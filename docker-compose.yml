@@ -1,0 +1,35 @@
+services:
+  api:
+    build: ./backend
+    environment:
+      DATABASE_PATH: /data/interview.db
+      AI_API_KEY: ${AI_API_KEY:-}
+      AI_MODEL: ${AI_MODEL:-gpt-4.1-mini}
+      AI_BASE_URL: ${AI_BASE_URL:-https://api.openai.com/v1}
+      TRANSCRIPTION_MODEL: ${TRANSCRIPTION_MODEL:-whisper-1}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_PRICE_ID: ${STRIPE_PRICE_ID:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+      LANGFUSE_BASE_URL: ${LANGFUSE_BASE_URL:-https://cloud.langfuse.com}
+      PUBLIC_APP_URL: ${PUBLIC_APP_URL:-http://localhost:8080}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost:8080}
+    volumes:
+      - interview_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+  web:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  interview_data:
